@@ -2,140 +2,141 @@
 
 ## 1. Objective
 
-The purpose of this research is to compare three LLMs suitable for website content analysis, business insight generation, competitor suggestions, and SEO recommendations.
+The purpose of this research is to evaluate Large Language Models (LLMs) suitable for website content analysis, business insight generation, competitor suggestions, and SEO recommendations.
 
-The comparison focuses on response quality, speed, pricing, context window, JSON output support, and ease of integration.
+The comparison focuses on response quality, latency, API cost, context capacity, structured output support, ease of integration, and suitability for the project.
 
 ## 2. Models Selected
 
 | Model | Provider | Category |
 |---|---|---|
-| Gemini 3.5 Flash-Lite | Google | Fast, cost-efficient |
-| GPT-5.4 mini | OpenAI | Balanced performance |
-| Claude Haiku 4.5 | Anthropic | Lightweight analysis |
+| Gemini Flash family | Google | Fast, cost-efficient analysis |
+| GPT mini family | OpenAI | General-purpose analysis |
+| Claude Haiku 4.5 | Anthropic | Lightweight language analysis |
 
-## 3. Comparison
+Model selection should be based on the exact API model identifier available at implementation time. Model availability and pricing can change.
 
-| Factor | Gemini 3.5 Flash-Lite | GPT-5.4 mini | Claude Haiku 4.5 |
+## 3. Comparison Criteria
+
+| Factor | Gemini Flash | GPT mini | Claude Haiku |
 |---|---|---|---|
 | Provider | Google | OpenAI | Anthropic |
-| Quality | Suitable for structured analysis | Strong general-purpose capability | Strong language and analysis capability |
-| Speed | Designed for low latency | Balanced speed and performance | Fast lightweight model |
-| Input pricing / 1M tokens | $0.30 | $0.75 | $1.00 |
-| Output pricing / 1M tokens | $2.50 | $4.50 | $5.00 |
-| Context window | ~1M tokens | ~400K tokens | ~200K tokens |
-| JSON support | Supported | Supported | Supported |
+| Response quality | Suitable for text analysis and structured generation | General-purpose language and reasoning tasks | Language understanding and summarization |
+| Speed | Flash models are designed for efficient responses | Depends on selected model | Haiku models are lightweight |
+| Cost | Depends on model and usage tier | Depends on model and usage tier | Depends on model and usage tier |
+| Context window | Varies by exact model | Varies by exact model | Varies by exact model |
+| Structured output | Supported by compatible models and API features | Supported by compatible models and API features | Structured output available through supported API features |
 | Integration | Google GenAI SDK | OpenAI SDK | Anthropic SDK |
 
-*Pricing and context figures are approximate research values and should be verified on official provider pricing pages before deployment. Speed and quality descriptions are qualitative, not benchmark measurements performed by this project.*
+Speed and quality descriptions are qualitative assessments based on model positioning, not benchmarks conducted by this project.
 
 ## 4. Evaluation Criteria
 
 ### Response Quality
-The model should accurately identify a website's business, understand its audience, summarize its positioning, and produce useful SEO suggestions.
+
+The model should identify the website's business, understand its target audience, summarize brand positioning, and provide relevant SEO and marketing suggestions.
 
 ### Response Speed
-A shorter response time improves the user experience. Website analysis should complete within a reasonable time without unnecessarily long AI output.
+
+The API should return analysis within a reasonable time. Lower latency improves usability, particularly for interactive applications.
 
 ### Cost
-The API should remain affordable for repeated website analysis requests.
+
+The model should be affordable for repeated website analysis. Cost depends on input tokens, output tokens, model choice, and pricing tier.
 
 ### Structured Output
-The model must return valid JSON so the response can be used by the FastAPI application without manual parsing.
+
+The model should generate consistent JSON that can be validated and consumed by the FastAPI application.
 
 ### Context Capacity
-The model should support enough input text to analyze extracted website content.
+
+The model should support the extracted website text and analysis instructions within its context limits.
+
+### Integration
+
+The provider should offer a stable SDK and clear documentation for API calls, error handling, and structured responses.
 
 ## 5. Estimated Cost per Analysis
 
-Assumption for one analysis:
+Assumptions for one analysis:
 
-- Input: 5,000 tokens
-- Output: 1,500 tokens
+- Input tokens: 5,000
+- Output tokens: 1,500
 
-| Model | Estimated cost per analysis |
-|---|---:|
-| Gemini 3.5 Flash-Lite | $0.00525 |
-| GPT-5.4 mini | $0.0105 |
-| Claude Haiku 4.5 | $0.0125 |
+Cost formula:
 
-These are estimates based on standard per-token rates and the assumed token usage. Actual costs depend on token consumption, current pricing, and additional provider charges.
+**Estimated cost = (Input tokens × Input price + Output tokens × Output price) / 1,000,000**
+
+Exact pricing is not included in this comparison because API rates depend on the specific model, usage tier, and provider pricing updates. Current prices should be checked using the official provider pricing pages before deployment.
 
 ## 6. Advantages and Limitations
 
-### Gemini 3.5 Flash-Lite
+### Gemini Flash
+
 **Advantages**
-- Cost-efficient for repeated analysis
-- Supports structured JSON output
-- Suitable for website text analysis
-- Large context capacity
+- Designed for efficient response generation
+- Suitable for text-based analysis
+- Supports structured output options
+- SDK integration with the Google GenAI library
 
 **Limitations**
-- AI suggestions may be inaccurate
-- Competitor identification may require external search verification
-- Output must be validated
+- AI-generated insights may contain inaccurate assumptions
+- Competitor suggestions require independent verification
+- Output validation is still necessary
 
-### GPT-5.4 mini
+### GPT mini
+
 **Advantages**
-- Strong general-purpose model
-- Useful for complex reasoning and structured tasks
-- Flexible API ecosystem
+- General-purpose language capabilities
+- Suitable for structured analysis tasks
+- Well-documented API ecosystem
 
 **Limitations**
-- Higher estimated cost than the selected Gemini model
-- Output can still contain unsupported assumptions
+- Costs vary by model and usage tier
+- AI-generated business claims may need verification
+- Requires additional integration if used as an alternative provider
 
 ### Claude Haiku 4.5
+
 **Advantages**
-- Good language understanding and summarization
-- Suitable for business content analysis
-- Structured output can be implemented through constrained tool/schema approaches
+- Lightweight model family
+- Useful for summarization and language analysis
+- Supports API-based structured generation workflows
 
 **Limitations**
-- More expensive under the comparison assumptions
-- AI-generated insights still require validation
+- Pricing depends on API usage
+- Generated recommendations may require manual review
+- A separate SDK and integration would be needed
 
 ## 7. Selected Model
 
-**Selected model: Gemini 3.5 Flash-Lite**
+**Selected model: Google Gemini**
 
-Google Gemini was selected for this project because it offers a good balance of affordability, speed-oriented design, large context capacity, and JSON output support.
+Gemini was selected for this project because it provides an accessible API, supports structured response generation, and can be integrated using Google's GenAI SDK.
 
-The project uses the Google GenAI SDK to analyze extracted website information and return structured business and SEO insights. The API was tested successfully with a website, and it returned a valid JSON response with HTTP 200 OK.
+The project uses Gemini to analyze extracted website content and generate business insights, competitor suggestions, search queries, and SEO recommendations.
 
-The model is suitable for this practical test because the workload mainly involves analyzing text and generating structured recommendations rather than performing complex reasoning tasks.
+This workload primarily involves webpage text analysis and structured generation, making a Flash-family model an appropriate starting point.
+
+The deployed API was tested successfully and returned structured analysis with HTTP 200 OK.
 
 ## 8. Cost Optimization
 
-The following techniques can help reduce API cost:
+Potential cost optimization techniques include:
 
 - Limit extracted website content to a reasonable size.
-- Avoid sending unnecessary HTML, scripts, styles, and navigation text.
-- Keep the AI prompt concise and specific.
-- Request only the fields needed by the API.
-- Use a low temperature for more consistent responses.
-- Cache results for repeated analysis of the same website when appropriate.
-- Avoid repeated AI calls for the same input unless the content changes.
+- Remove scripts, styles, and unnecessary HTML.
+- Use concise prompts.
+- Request only required output fields.
+- Use a lower output token limit when appropriate.
+- Cache results for repeated website analysis.
+- Avoid duplicate AI calls when website content has not changed.
+- Select a model based on actual quality and cost testing.
 
 ## 9. Reliability and Fallback Strategy
 
 To improve reliability:
 
-- Validate AI output using Pydantic models.
-- Handle API timeouts and provider errors.
-- Return a clear error response when the AI provider is unavailable.
-- Retry only temporary failures and limit retries.
-- Consider a secondary model/provider as a future fallback.
-- Label AI-inferred competitors and recommendations so they are not presented as verified facts.
-
-A secondary provider has not yet been implemented in this version.
-
-## 10. Research Sources
-
-- Gemini model information and evaluation: https://deepmind.google/models/
-- Gemini API documentation: https://ai.google.dev/gemini-api/docs
-- OpenAI API documentation: https://platform.openai.com/docs/models
-- Anthropic model documentation: https://docs.anthropic.com/en/docs/about-claude/models/overview
-- Model comparison and pricing reference: https://www.dailyaiintel.com/tools/model-comparison
-
-*Prices and model specifications are subject to change. The figures above are a research snapshot, not a live quote.*
+- Validate AI responses using Pydantic schemas.
+- Handle timeouts and provider errors.
+- Return clear errors when the AI provider
